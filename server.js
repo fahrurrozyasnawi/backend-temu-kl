@@ -24,6 +24,7 @@ mongoose
 app.set("secretKey", process.env.SECRET_KEY || "localsippkl");
 
 app.use(logger("dev"));
+app.options("*", cors());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
