@@ -137,11 +137,14 @@ exports.getAll = async function (req, res, next) {
     ]);
 
     tfuBarChartData = {
-      label: tfuBarChartData[0].label,
+      label: tfuBarChartData[0]?.label || [],
       data: [
-        { name: "Total TFU", data: tfuBarChartData[0].total },
-        { name: "Memenuhi Syarat", data: tfuBarChartData[0].syarat },
-        { name: "Tidak Memenuhi Syarat", data: tfuBarChartData[0].nonSyarat },
+        { name: "Total TFU", data: tfuBarChartData[0]?.total || 0 },
+        { name: "Memenuhi Syarat", data: tfuBarChartData[0]?.syarat || 0 || 0 },
+        {
+          name: "Tidak Memenuhi Syarat",
+          data: tfuBarChartData[0]?.nonSyarat || 0 || 0,
+        },
       ],
     };
 
@@ -270,11 +273,14 @@ exports.getAll = async function (req, res, next) {
     ]);
 
     tppBarChartData = {
-      label: tppBarChartData[0].label,
+      label: tppBarChartData[0]?.label || [],
       data: [
-        { name: "Total TPP", data: tppBarChartData[0].total },
-        { name: "Memenuhi Syarat", data: tppBarChartData[0].syarat },
-        { name: "Tidak Memenuhi Syarat", data: tppBarChartData[0].nonSyarat },
+        { name: "Total TPP", data: tppBarChartData[0]?.total || 0 },
+        { name: "Memenuhi Syarat", data: tppBarChartData[0]?.syarat || 0 },
+        {
+          name: "Tidak Memenuhi Syarat",
+          data: tppBarChartData[0]?.nonSyarat || 0,
+        },
       ],
     };
 
@@ -437,13 +443,19 @@ exports.getAll = async function (req, res, next) {
     ]);
 
     waterBarChartData = {
-      label: waterBarChartData[0].label,
+      label: waterBarChartData[0]?.label || [],
       data: [
-        { name: "Total Penyehatan Air", data: waterBarChartData[0].total },
-        { name: "Resiko Rendah", data: waterBarChartData[0].rendah },
-        { name: "Resiko Sedang", data: waterBarChartData[0].sedang },
-        { name: "Resiko Tinggi", data: waterBarChartData[0].tinggi },
-        { name: "Resiko Amat Tinggi", data: waterBarChartData[0].amatTinggi },
+        {
+          name: "Total Penyehatan Air",
+          data: waterBarChartData[0]?.total || 0,
+        },
+        { name: "Resiko Rendah", data: waterBarChartData[0]?.rendah || 0 },
+        { name: "Resiko Sedang", data: waterBarChartData[0]?.sedang || 0 },
+        { name: "Resiko Tinggi", data: waterBarChartData[0]?.tinggi || 0 },
+        {
+          name: "Resiko Amat Tinggi",
+          data: waterBarChartData[0]?.amatTingg || 0,
+        },
       ],
     };
 
@@ -556,16 +568,19 @@ exports.getAll = async function (req, res, next) {
     ]);
 
     healthyHouseBarChartData = {
-      label: healthyHouseBarChartData[0].label,
+      label: healthyHouseBarChartData[0]?.label || [],
       data: [
         {
           name: "Total Penyehatan Rumah",
-          data: healthyHouseBarChartData[0].total,
+          data: healthyHouseBarChartData[0]?.total,
         },
-        { name: "Memenuhi Syarat", data: healthyHouseBarChartData[0].syarat },
+        {
+          name: "Memenuhi Syarat",
+          data: healthyHouseBarChartData[0]?.syarat || 0,
+        },
         {
           name: "Tidak Memenuhi Syarat",
-          data: healthyHouseBarChartData[0].nonSyarat,
+          data: healthyHouseBarChartData[0]?.nonSyarat || 0,
         },
       ],
     };
@@ -614,22 +629,22 @@ exports.getAll = async function (req, res, next) {
 
     console.log("data chart", sanitaryBarChartData);
     sanitaryBarChartData = {
-      label: sanitaryBarChartData[0].label,
-      data: [{ name: "Total", data: sanitaryBarChartData[0].total }],
+      label: sanitaryBarChartData[0]?.label || [],
+      data: [{ name: "Total", data: sanitaryBarChartData[0]?.total || 0 }],
     };
 
     // summary data
     const data = {
       tfu: {
         totalTFU,
-        totalIKLTFU: totalIKLTFU[0].total,
+        totalIKLTFU: totalIKLTFU[0]?.total || 0,
         syarat: totalSyarat,
         nonSyarat: totalNonSyarat,
         chartData: tfuBarChartData,
       },
       tpp: {
         totalTPP,
-        totalIKLTPP: totalIKLTPP[0].total,
+        totalIKLTPP: totalIKLTPP[0]?.total || 0,
         syarat: totalSyaratTPP,
         nonSyarat: totalNonSyaratTPP,
         chartData: tppBarChartData,
@@ -642,14 +657,14 @@ exports.getAll = async function (req, res, next) {
       },
       hh: {
         totalHH,
-        totalIKLHH: totalIKLHH[0].total,
+        totalIKLHH: totalIKLHH[0]?.total || 0,
         syarat: totalSyaratHH,
         nonSyarat: totalNonSyaratHH,
         chartData: healthyHouseBarChartData,
       },
       water: {
         totalWater,
-        totalIKLWater: totalIKLWater[0].total,
+        totalIKLWater: totalIKLWater[0]?.total || 0,
         resiko: {
           rendah: totalLRiskWater,
           sedang: totalMRiskWater,
