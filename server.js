@@ -63,7 +63,7 @@ app.use("/area", verifyToken, areaCodeRoute);
 app.use("/users", verifyToken, usersRoute);
 app.use("/puskesmas", verifyToken, puskesmasRoute);
 app.use("/resident", verifyToken, residentRoute);
-app.use("/document", verifyToken, documentsRoute);
+app.use("/document", documentsRoute);
 app.use("/tfu", verifyToken, tfuRoute);
 app.use("/tfu/assesment", verifyToken, tfuAssesmentRoute);
 app.use("/tpp", verifyToken, tppRoute);

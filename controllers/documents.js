@@ -33,6 +33,25 @@ exports.getAll = async function (req, res, next) {
   }
 };
 
+exports.getFileDownload = function (req, res, next) {
+  const dirPath = "./repo/document";
+  const { filename } = req.params;
+
+  return res.download(`${dirPath}/${filename}`, filename, (err) => {
+    if (err) {
+      console.log("running");
+      return res.status(404).json({
+        message: "File tidak dapat didownload!!",
+      });
+    }
+  });
+  // try {
+  //   // return res.json({ status: "success", data });
+  // } catch (err) {
+  //   next(err);
+  // }
+};
+
 exports.getData = async function (req, res, next) {
   const { _id } = req.params;
 
@@ -42,7 +61,6 @@ exports.getData = async function (req, res, next) {
 
   try {
     const data = await documents.findById(_id);
-    // console.log("getDocument", data);
     res.json({ status: "success", data });
   } catch (err) {
     next(err);
