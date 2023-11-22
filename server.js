@@ -12,6 +12,12 @@ const app = express();
 const path = require("path");
 const db = require("./config/database").mongoURI;
 
+// set cors optins
+const corsOptions = {
+  origin: "https://temu-kl.vercel.app",
+  optionsSuccessStatus: 200,
+};
+
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -24,8 +30,8 @@ mongoose
 app.set("secretKey", process.env.SECRET_KEY || "localsippkl");
 
 app.use(logger("dev"));
-app.options("*", cors());
-app.use(cors());
+// app.options("*", cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
 
