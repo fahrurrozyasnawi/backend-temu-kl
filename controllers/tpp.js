@@ -6,11 +6,17 @@ exports.getAll = async function (req, res, next) {
   const page = parseInt(req.query.pageIndex) || 0;
   const pageSize = parseInt(req.query.pageSize) || 10;
 
-  // const { sentraType } = req.query
+  // queries
+  const { search, by } = req.query;
+
   let query = {};
 
+  if (search && by) {
+    query = { ...query, [by]: { $regex: new RegExp("^" + search, "i") } };
+  }
+
   try {
-    const totalPages = await tpp.countDocuments(); // total items
+    const totalPages = await tpp.countDocuments(query); // total items
 
     const data = await tpp
       .find(query)
