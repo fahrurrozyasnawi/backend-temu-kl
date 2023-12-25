@@ -7,7 +7,7 @@ exports.getAll = async function (req, res, next) {
   const pageSize = parseInt(req.query.pageSize) || 10;
 
   // queries
-  const { search, by } = req.query;
+  const { search, query: by } = req.query;
 
   let query = {};
 
