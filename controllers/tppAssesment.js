@@ -20,7 +20,7 @@ exports.getAll = async function (req, res, next) {
   }
 
   try {
-    const totalPages = await tppAssesment.countDocuments(); // total items
+    const totalPages = await tppAssesment.countDocuments(query); // total items
 
     const data = await tppAssesment
       .find(query)

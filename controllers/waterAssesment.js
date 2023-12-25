@@ -15,7 +15,7 @@ exports.getAll = async function (req, res, next) {
   }
 
   try {
-    const totalPages = await waterAssesment.countDocuments(); // total items
+    const totalPages = await waterAssesment.countDocuments(query); // total items
 
     const data = await waterAssesment
       .find(query)

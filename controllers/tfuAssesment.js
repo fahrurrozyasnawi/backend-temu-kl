@@ -14,7 +14,7 @@ exports.getAll = async function (req, res, next) {
   }
 
   try {
-    const totalPages = await tfuAssesment.countDocuments(); // total items
+    const totalPages = await tfuAssesment.countDocuments(query); // total items
 
     const data = await tfuAssesment
       .find(query)
