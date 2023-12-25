@@ -2,6 +2,10 @@ const tfuAssesment = require("../models/tfuAssesment");
 const mongoose = require("mongoose");
 
 exports.getAll = async function (req, res, next) {
+  // pagination
+  const page = parseInt(req.query.pageIndex) || 0;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+
   const { tfu } = req.query;
   let query = {};
 
@@ -10,12 +14,16 @@ exports.getAll = async function (req, res, next) {
   }
 
   try {
+    const totalPages = await tfuAssesment.countDocuments(); // total items
+
     const data = await tfuAssesment
       .find(query)
-      .sort({ _id: -1 })
       .populate("tfu")
-      .exec();
-    res.json({ status: "success", data });
+      .skip(page * pageSize)
+      .limit(pageSize)
+      .sort({ _id: -1 });
+
+    res.json({ status: "success", data, totalPages });
   } catch (err) {
     next(err);
   }

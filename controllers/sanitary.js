@@ -2,11 +2,22 @@ const sanitary = require("../models/sanitary");
 const mongoose = require("mongoose");
 
 exports.getAll = async function (req, res, next) {
+  // pagination
+  const page = parseInt(req.query.pageIndex) || 0;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+
   let query = {};
 
   try {
-    const data = await sanitary.find(query).sort({ _id: -1 });
-    res.json({ status: "success", data });
+    const totalPages = await sanitary.countDocuments(); // total items
+
+    const data = await sanitary
+      .find(query)
+      .skip(page * pageSize)
+      .limit(pageSize)
+      .sort({ _id: -1 });
+
+    res.json({ status: "success", data, totalPages });
   } catch (err) {
     next(err);
   }

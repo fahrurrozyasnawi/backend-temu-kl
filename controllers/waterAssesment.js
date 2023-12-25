@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const water = require("../models/water");
 
 exports.getAll = async function (req, res, next) {
+  // pagination
+  const page = parseInt(req.query.pageIndex) || 0;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+
   const { water: waterType } = req.query;
   let query = {};
 
@@ -11,12 +15,16 @@ exports.getAll = async function (req, res, next) {
   }
 
   try {
+    const totalPages = await waterAssesment.countDocuments(); // total items
+
     const data = await waterAssesment
       .find(query)
-      .sort({ _id: -1 })
       .populate("water")
-      .exec();
-    res.json({ status: "success", data });
+      .skip(page * pageSize)
+      .limit(pageSize)
+      .sort({ _id: -1 });
+
+    res.json({ status: "success", data, totalPages });
   } catch (err) {
     next(err);
   }
