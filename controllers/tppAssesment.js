@@ -8,7 +8,7 @@ exports.getAll = async function (req, res, next) {
   const page = parseInt(req.query.pageIndex) || 0;
   const pageSize = parseInt(req.query.pageSize) || 10;
 
-  const { sentraType, tpp } = req.query;
+  const { sentraType, tpp, search, query: by } = req.query;
   let query = {};
 
   if (tpp) {
@@ -17,6 +17,10 @@ exports.getAll = async function (req, res, next) {
 
   if (sentraType) {
     query = { ...query, sentraType };
+  }
+
+  if (search && by) {
+    query = { ...query, [by]: { $regex: new RegExp(search, "i") } };
   }
 
   try {

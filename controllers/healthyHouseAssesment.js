@@ -7,11 +7,15 @@ exports.getAll = async function (req, res, next) {
   const page = parseInt(req.query.pageIndex) || 0;
   const pageSize = parseInt(req.query.pageSize) || 10;
 
-  const { hh } = req.query;
+  const { hhj, search, query: by } = req.query;
   let query = {};
 
   if (hh) {
     query = { ...query, hh: new mongoose.Types.ObjectId(hh) };
+  }
+
+  if (search && by) {
+    query = { ...query, [by]: { $regex: new RegExp(search, "i") } };
   }
 
   try {
