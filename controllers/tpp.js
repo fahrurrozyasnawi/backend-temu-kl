@@ -12,7 +12,10 @@ exports.getAll = async function (req, res, next) {
   let query = {};
 
   if (search && by) {
-    query = { ...query, [by]: { $regex: new RegExp("^" + search, "i") } };
+    query = {
+      ...query,
+      [by]: { $regex: new RegExp(search, "i") },
+    };
   }
 
   try {
